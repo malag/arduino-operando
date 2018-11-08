@@ -1,20 +1,22 @@
-#include < NonBlockingRtttl.h > 
+#include <NonBlockingRtttl.h>
 
 #define Buzzer 9
 
+//Melodías en format RTTTL
+//https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language
 const char * stranger = "StrangerThings:d=4,o=5,b=170:8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8p,8e4,8e,8g,8b,8p,8c4,8p,8c4,8g,8e,8p";
 const char * halloween = "Halloween:d=4,o=5,b=180:8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#";
+
 int LED = 6;
 int Touch = 7;
-int intentos = 0;
 
 //Led RGB
 int pinRojo = 4;
 int pinVerde = 3;
 int pinAzul = 5;
 
-const int necessary_delay = 20; //in milliseconds
-bool isTouching = false; //Note how it is declared outside the loop
+const int necessary_delay = 20; //milliseconds
+bool isTouching = false;
 unsigned long countStart;
 int kill = 0;
 
