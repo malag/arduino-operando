@@ -1,4 +1,5 @@
-#include <NonBlockingRtttl.h>
+#include < NonBlockingRtttl.h > 
+
 #define Buzzer 9
 
 const char * stranger = "StrangerThings:d=4,o=5,b=170:8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8p,8e4,8e,8g,8b,8p,8c4,8p,8c4,8g,8e,8p";
@@ -8,54 +9,40 @@ int Touch = 7;
 int intentos = 0;
 
 //Led RGB
-int Rojo = 4;
-int Verde = 3;
-int Azul = 5;
-//Se almacenan los valores relativos a la intensidad de cada color
-//(las candelas de cada color).
-int mcdRojo = 300;
-int mcdVerde = 1000;
-int mcdAzul = 400;
-//Se realiza una relación entre las candelas de los distintos
-//colores.
-int GradoRojo = (mcdRojo / mcdVerde);
-int GradoVerde = (mcdVerde / mcdVerde);
-int GradoAzul = (mcdAzul / mcdVerde);
+int pinRojo = 4;
+int pinVerde = 3;
+int pinAzul = 5;
 
-const int necessary_delay = 10; //in milliseconds
+const int necessary_delay = 20; //in milliseconds
 bool isTouching = false; //Note how it is declared outside the loop
 unsigned long countStart;
 int kill = 0;
 
-void loop_touching()
-{
+void loopJuego() {
   unsigned long m = millis();
 
   digitalWrite(LED, isTouching);
   digitalWrite(Buzzer, isTouching);
 
-  if (digitalRead(Touch) == HIGH)
-  {
+  if (digitalRead(Touch) == HIGH) {
     if (isTouching) {
       countStart = m;
       return;
     }
-    if (m - countStart >= necessary_delay)
-    {
+    if (m - countStart >= necessary_delay) {
       countStart = m;
       kill++; //once!
-      Serial.println(kill); 
-      isTouching = true; 
+      Serial.println(kill);
+      cambiarColor(kill);
+      isTouching = true;
       return;
     }
-  }
-  else if (digitalRead(Touch) == LOW) {
+  } else if (digitalRead(Touch) == LOW) {
     if (!isTouching) {
       countStart = m;
       return;
     }
-    if (m - countStart >= necessary_delay)
-    {
+    if (m - countStart >= necessary_delay) {
       countStart = m;
       isTouching = false;
       return;
@@ -64,55 +51,68 @@ void loop_touching()
 }
 
 //Colores
-void EstablecerColor(int R, int G, int B) 
-{
-  //Se utiliza la expresión X/GradoX para multiplicar el valor de la
-  //salida PWM por un número que consiga una intensidad de luz
-  //equiparable entre todos los colores.
-  //Se debe tener en cuenta que la salida máxima es 255, por tanto,
-  //la compensación entre los colores se pierde si la relación
-  //X/GradoX genera un valor superior a 255.
-  analogWrite(Rojo, (R / GradoRojo));
-  analogWrite(Verde, (G / GradoVerde));
-  analogWrite(Azul, (B / GradoAzul));
-
+void setColor(int red, int green, int blue) {
+  analogWrite(pinRojo, red);
+  analogWrite(pinVerde, green);
+  analogWrite(pinAzul, blue);
 }
 
+void cambiarColor(int kill) {
+  if (kill > 1 && kill < 3) {
+    setColor(23, 161, 165);
+  }
+  if (kill > 2 && kill < 4) {
+    setColor(255, 1, 206);
+  }
+  if (kill > 3 && kill < 7) {
+    setColor(243, 171, 17);
+  }
+  if (kill > 6 && kill < 8) {
+    setColor(243, 89, 17);
+  }
+  if (kill > 7 && kill < 10) {
+    setColor(243, 37, 17);
+  }
+  if (kill > 8) {
+    setColor(255, 22, 0);
+  }
+  if (kill > 9) {
+    setColor(255, 0, 0);
+  }
+}
 
-void setup() 
-{
+void setup() {
   pinMode(LED, OUTPUT);
   pinMode(Buzzer, OUTPUT);
   pinMode(Touch, INPUT);
-  pinMode(Rojo, OUTPUT);
-  pinMode(Verde, OUTPUT);
-  pinMode(Azul, OUTPUT);
-  
-  EstablecerColor(0, 200, 0); //RGB
-  
+  pinMode(pinRojo, OUTPUT);
+  pinMode(pinVerde, OUTPUT);
+  pinMode(pinAzul, OUTPUT);
+
+  setColor(128, 128, 0); //RGB
+
   Serial.begin(115200);
-  Serial.println();  
+  Serial.println();
 }
+//Naranaja -> rojo 
+//186, 243, 17
+//243, 229, 17
+//243, 171, 17
+//243, 89, 17
+//243, 37, 17
+//255, 22, 0
 
 void loop() {
-  if ( !rtttl::isPlaying() )
-  {
+  if (!rtttl::isPlaying()) {
     rtttl::begin(Buzzer, halloween);
-    if(kill > 3)
-    {
+
+    if (kill > 9) {
       rtttl::stop();
       rtttl::begin(Buzzer, stranger);
-      EstablecerColor(200, 0, 0); //RGB
-      
-    }    
-  }
-  else
-  {
+    }
+  } else {
     rtttl::play();
   }
 
-
-  loop_touching();
+  loopJuego();
 }
-
- 
