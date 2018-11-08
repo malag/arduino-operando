@@ -3,7 +3,7 @@
 Juego Operando, implementado con Arduino.
 
 * El típico juego <a href="https://es.wikipedia.org/wiki/Operation" target="_blank" title="ver en Wikipedia">Operando</a>.
-* Se escucha una melodía (<a href="https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language" target="_blank" title="ver en Wikipedia">RTTTL) durante el juego haciendo uso de un Buzzer.
+* Se escucha una melodía (<a href="https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language" target="_blank" title="ver en Wikipedia">RTTTL</a>) durante el juego haciendo uso de un Buzzer.
 * El Led RGB cambia de color durante el juego, según los intentos fallidos.
 * Al terminar el número de intentos establecido se cambia el color del Led a rojo y se cambia la melodía.
 
