@@ -3,9 +3,9 @@
 Juego Operando, implementado con Arduino.
 
 * El típico juego Operando.
-* Se escucha una melodía durante el juego haciendo uso de un Buzzer.
+* Se escucha una melodía (RTTTL) durante el juego haciendo uso de un Buzzer.
 * El Led RGB cambia de color durante el juego, según los intentos fallidos.
-* Al terminar el número de intentos establecido, se establece el color Rojo y se cambia la melodía.
+* Al terminar el número de intentos establecido se cambia el color del Led a rojo y se cambia la melodía.
 
 
 ## Agradecimiento a los siguients proyectos
