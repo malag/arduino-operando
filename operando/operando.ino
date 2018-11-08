@@ -3,12 +3,12 @@
 #define Buzzer 9
 
 //Melodías en format RTTTL
-//https://en.wikipedia.org/wiki/Ring_Tone_Transfer_Language
 const char * stranger = "StrangerThings:d=4,o=5,b=170:8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8p,8e4,8e,8g,8b,8p,8c4,8p,8c4,8g,8e,8p";
 const char * halloween = "Halloween:d=4,o=5,b=180:8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#";
 
 int LED = 6;
 int Touch = 7;
+int RESET = 10;
 
 //Led RGB
 int pinRojo = 4;
@@ -33,9 +33,9 @@ void loopJuego() {
     }
     if (m - countStart >= necessary_delay) {
       countStart = m;
-      kill++; //once!
-      Serial.println(kill);
+      kill++;
       cambiarColor(kill);
+      Serial.println(kill);
       isTouching = true;
       return;
     }
@@ -50,6 +50,8 @@ void loopJuego() {
       return;
     }
   }
+
+
 }
 
 //Colores
@@ -60,26 +62,27 @@ void setColor(int red, int green, int blue) {
 }
 
 void cambiarColor(int kill) {
+  
   if (kill > 1 && kill < 3) {
-    setColor(23, 161, 165);
+    setColor(52, 205, 255); //azul
   }
-  if (kill > 2 && kill < 4) {
-    setColor(255, 1, 206);
+  if (kill > 2 && kill < 5) {
+    setColor(118, 173, 253); //azul
   }
-  if (kill > 3 && kill < 7) {
-    setColor(243, 171, 17);
+  if (kill > 4 && kill < 7) {
+    setColor(0, 9, 228); //azul
   }
   if (kill > 6 && kill < 8) {
-    setColor(243, 89, 17);
+    setColor(235, 215, 0); //amarillo
   }
   if (kill > 7 && kill < 10) {
-    setColor(243, 37, 17);
+    setColor(223, 95, 0); //naranja
   }
   if (kill > 8) {
-    setColor(255, 22, 0);
+    setColor(253, 0, 87); //morado
   }
   if (kill > 9) {
-    setColor(255, 0, 0);
+    setColor(255, 0, 0); //rojo
   }
 }
 
@@ -87,22 +90,17 @@ void setup() {
   pinMode(LED, OUTPUT);
   pinMode(Buzzer, OUTPUT);
   pinMode(Touch, INPUT);
+  pinMode(RESET, INPUT);
   pinMode(pinRojo, OUTPUT);
   pinMode(pinVerde, OUTPUT);
   pinMode(pinAzul, OUTPUT);
 
-  setColor(128, 128, 0); //RGB
+  setColor(128, 128, 0); //Verde
 
   Serial.begin(115200);
   Serial.println();
 }
-//Naranaja -> rojo 
-//186, 243, 17
-//243, 229, 17
-//243, 171, 17
-//243, 89, 17
-//243, 37, 17
-//255, 22, 0
+
 
 void loop() {
   if (!rtttl::isPlaying()) {
@@ -110,11 +108,23 @@ void loop() {
 
     if (kill > 9) {
       rtttl::stop();
-      rtttl::begin(Buzzer, stranger);
+      rtttl::begin(Buzzer, stranger); //cambio de melodía
     }
   } else {
     rtttl::play();
   }
 
   loopJuego();
+  
+  //Si presionan RESET
+  if(digitalRead(RESET) == HIGH){
+    Serial.println("RESET");
+    if(rtttl::isPlaying()){
+      rtttl::stop();
+      rtttl::begin(Buzzer, halloween); //cambio de melodía
+      setColor(128, 128, 0); //Verde
+      kill=0;
+      delay(1000);
+    }
+  }  
 }
