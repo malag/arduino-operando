@@ -1,6 +1,6 @@
 #include <NonBlockingRtttl.h>
-
 #define Buzzer 9
+
 const char * stranger = "StrangerThings:d=4,o=5,b=170:8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8p,8e4,8e,8g,8b,8p,8c4,8p,8c4,8g,8e,8p";
 const char * halloween = "Halloween:d=4,o=5,b=180:8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#";
 int LED = 6;
@@ -13,8 +13,6 @@ bool isTouching = false; //Note how it is declared outside the loop
 unsigned long countStart;
 int kill = 0;
 
-
-
 void setup() {
   pinMode(LED, OUTPUT);
   pinMode(Buzzer, OUTPUT);
@@ -23,6 +21,7 @@ void setup() {
   Serial.begin(115200);
   Serial.println();  
 }
+
 void loop_touching()
 {
   unsigned long m = millis();
