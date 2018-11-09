@@ -2,7 +2,7 @@
 
 #define Buzzer 9
 
-//MelodÃ­as en format RTTTL
+//Melodías en format RTTTL
 const char * stranger = "StrangerThings:d=4,o=5,b=170:8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8c4,8p,8c4,8g,8b,8p,8c4,8p,8c4,8g,8e,8p,8p,8e4,8e,8g,8b,8p,8c4,8p,8c4,8g,8e,8p";
 const char * halloween = "Halloween:d=4,o=5,b=180:8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8d6,8g,8g,8d6,8g,8g,8d6,8g,8d#6,8g,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#,8c#6,8f#,8f#,8c#6,8f#,8f#,8c#6,8f#,8d6,8f#";
 
@@ -73,13 +73,13 @@ void cambiarColor(int kill) {
     setColor(0, 9, 228); //azul
   }
   if (kill > 6 && kill < 8) {
-    setColor(235, 215, 0); //amarillo
+setColor(35, 85, 211); //azul
   }
   if (kill > 7 && kill < 10) {
-    setColor(223, 95, 0); //naranja
+    setColor(253, 0, 87); //morado
   }
   if (kill > 8) {
-    setColor(253, 0, 87); //morado
+    setColor(179, 0, 223); //morado
   }
   if (kill > 9) {
     setColor(255, 0, 0); //rojo
@@ -108,7 +108,7 @@ void loop() {
 
     if (kill > 9) {
       rtttl::stop();
-      rtttl::begin(Buzzer, stranger); //cambio de melodÃ­a
+      rtttl::begin(Buzzer, stranger); //cambio de melodía
     }
   } else {
     rtttl::play();
@@ -121,7 +121,7 @@ void loop() {
     Serial.println("RESET");
     if(rtttl::isPlaying()){
       rtttl::stop();
-      rtttl::begin(Buzzer, halloween); //cambio de melodÃ­a
+      rtttl::begin(Buzzer, halloween); //cambio de melodía
       setColor(128, 128, 0); //Verde
       kill=0;
       delay(1000);
