@@ -8,9 +8,16 @@ pipeline {
       }
     }
 
-    stage('Instalación') {
+    stage('Instalacion') {
       steps {
         sh 'gcc -v'
+      }
+    }
+
+    stage('saludo') {
+      steps {
+        sh '''gcc -o saludo programa.c
+./saludo'''
       }
     }
 
